@@ -15,6 +15,14 @@ def author_list(request):
 def author_create(request):
     return  HttpResponse('<h1>create author</h1>')
 def author_update(request,id):
-    return  HttpResponse('<h1>update author</h1>')
+    # return  HttpResponse('<h1>update author</h1>')
+    context={'id':id}
+    return render(request, 'author/update.html', context)
 def author_delete(request,id):
-    return  HttpResponse('<h1>Delete author</h1>')
+    # return  HttpResponse('<h1>Delete author</h1>')
+    context = {'id': id}
+    return render(request, 'author/delete.html', context)
+def author_show(request,id):
+    # return  HttpResponse('<h1>Delete author</h1>')
+    context = {'id': id}
+    return render(request, 'author/show.html', context)
