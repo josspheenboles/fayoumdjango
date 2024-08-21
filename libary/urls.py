@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-
+from django.conf import settings
+from django.conf.urls.static import static
 #url--->view function(views.py)
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +28,7 @@ urlpatterns = [
     # path('Register/', register),
 
 
-]
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 #uuid--->
 #slug=ascii,lettwe,number
 #str=letter,number
