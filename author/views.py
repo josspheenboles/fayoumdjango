@@ -1,7 +1,9 @@
 #controller
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required()
 def author_list(request):
     author=[]
     auth1={'id':1,'name':'aya'}
@@ -14,6 +16,7 @@ def author_list(request):
     # return  HttpResponse('<h1>list author</h1>')
 def author_create(request):
     return  HttpResponse('<h1>create author</h1>')
+# @csrf_exempt()
 def author_update(request,id):
     # return  HttpResponse('<h1>update author</h1>')
     context={'id':id}

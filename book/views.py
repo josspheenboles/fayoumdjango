@@ -4,6 +4,43 @@ from django.shortcuts import render, HttpResponseRedirect,redirect
 from django.http import HttpResponse
 from .models import *
 from author.models import *
+from django.views import View
+from .forms import *
+from django.views.generic import ListView,UpdateView
+from django.shortcuts import reverse
+class BookUpdateG(UpdateView):
+    model = Book
+    template_name = 'book/update.html'
+    # success_url = reverse('book_list')
+class BookListG(ListView):
+    model = Book
+    template_name = 'book/list.html'
+    context_object_name = 'books'
+
+
+
+class BookList(View):
+    context={}
+    #get method only
+    def get(self,request):
+        #get book from db
+        BookList.context['books']=Book.objects.all()
+        #pass book to templeate
+        return render(request,'book/list.html',BookList.context)
+class BookCreate(View):
+    form = NewbookModel()
+    context = {'form': form}
+    def get(self,request):
+      return render(request, 'book/addformmodel.html', context)
+    def post(self,request):
+        form = NewbookModel(request.POST, request.FILES)
+        if (form.is_valid()):
+            form.save(commit=True)
+            #redirect BookList
+        else:
+            context['errors']=form.errors
+            return render(request, 'book/addformmodel.html', context)
+
 
 from author.models import Author
 
@@ -11,7 +48,7 @@ from author.models import Author
 # Create your views here.
 #function--->view
 #arg--->httprequest
-#return --->httpresoinse
+#return --->httpresonse
 def book_show(request,id):
     # return  HttpResponse('<h1>show book</h1>')
     # context={}
@@ -80,6 +117,15 @@ def book_create(req):
     # response['content-type']='text/plain'
     # return response
 from .forms import *
+def book_create_formmodel(request):
+    form=NewbookModel()
+    context={'form':form}
+    if(request.method=='POST'):
+        #validation server sid
+        form = NewbookModel(request.POST,request.FILES)
+        if (form.is_valid()):
+            form.save(commit=True)
+    return render(request, 'book/addformmodel.html', context)
 def book_create_from(request,id):
     context={}
     # publish book old data

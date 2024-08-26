@@ -18,14 +18,19 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views
+from django.contrib.admin import *
+from accounts.views import *
 #url--->view function(views.py)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Books/',include('book.urls')),
     path('Authors/',include('author.urls')),
-    # path('', login),
-    # path('Logout/', logout),
-    # path('Register/', register),
+    # path('accounts/login/',views.LoginView.as_view(),name='login'),
+    # path('accounts/profile/',views.FormView.as_view(),name='profile'),
+    # path('Logout/', views.LogoutView.as_view(),name='logout'),
+    path('Register/', register,name='register'),
+    path('', login,name='login'),
 
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
