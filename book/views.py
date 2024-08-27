@@ -1,5 +1,5 @@
 from lib2to3.fixes.fix_input import context
-
+from django.http.response import JsonResponse
 from django.shortcuts import render, HttpResponseRedirect,redirect
 from django.http import HttpResponse
 from .models import *
@@ -8,6 +8,13 @@ from django.views import View
 from .forms import *
 from django.views.generic import ListView,UpdateView
 from django.shortcuts import reverse
+#restrict only get method
+def GetInfo(request):
+    book=Book.objects.all()
+    
+    jsonobject={'id':book.id,'name':book.name}
+    return JsonResponse(jsonobject)
+    # return HttpResponse(book)
 class BookUpdateG(UpdateView):
     model = Book
     template_name = 'book/update.html'

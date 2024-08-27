@@ -30,8 +30,16 @@ append path ---url:port/static-->
 				</button>
 				<button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
 			</div>
+			{%if request.session.id is not None%}
+			<a hre="">Logout</a>
+			{%else%}
 			<a href ='{%url "login" %}'>Login</a>
 			<a href ='{%url "register" %}'>Regsiter</a>
+			{%endif%}
+				{%if request.session.iadmin == True%}
+						<a hre="">admin</a>
+				{%endif%}
+
 			<nav class="navbar navbar-header navbar-expand-lg">
 				<div class="container-fluid">
 
